@@ -2,6 +2,8 @@ import pyttsx3
 import speech_recognition as sr
 import datetime
 import wikipedia
+import webbrowser
+import os
 
 engine = pyttsx3.init('sapi5')
 voices = engine.getProperty('voices')
@@ -48,8 +50,25 @@ if __name__ == "__main__":
             
             if 'wikipedia' in query:
                 speak('Searching Wikipedia...')
-            query= query.replace("wikipedia", "")
-            results = wikipedia.summary(query, sentences=1)
-            speak("According to wikipedia...")
-            print(results)
-            speak(results)
+                query= query.replace("wikipedia", "")
+                results = wikipedia.summary(query, sentences=1)
+                speak("According to wikipedia...")
+                print(results)
+                speak(results)
+          
+            elif 'open youtube' in query:
+                webbrowser.open("youtube.com")
+                
+            elif 'open google' in query:
+                webbrowser.open("google.com")
+                
+            elif 'open stackoverflow' in query:
+                webbrowser.open("stackoverflow.com")
+            
+            elif 'play music' in query:
+                music_dir = 'D:\\music\\songs'
+                songs = os.listdir(music_dir)
+                print(songs)
+                os.startfile(os.path.join(music_dir, songs[0]))
+
+
