@@ -45,7 +45,8 @@ def takeCommand():
 
 if __name__ == "__main__":
         wishMe()
-        while True:
+        #while True:
+        if 1:
             query = takeCommand().lower()
             
             if 'wikipedia' in query:
@@ -70,5 +71,13 @@ if __name__ == "__main__":
                 songs = os.listdir(music_dir)
                 print(songs)
                 os.startfile(os.path.join(music_dir, songs[0]))
+            
+            elif 'the time' in query:
+                strTime = datetime.datetime.now().strftime("%H PM %M minit %S")
+                speak(f"sir, the time is{strTime}")
+            
+            elif 'open code' in query:
+                codePath = "C:\\Users\\Hp\\AppData\\Local\\Programs\\Microsoft VS Code\\Code.exe"
+                os.startfile(codePath)
 
 
