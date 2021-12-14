@@ -5,6 +5,12 @@ import wikipedia
 import webbrowser
 import os
 import smtplib
+import subprocess
+import ctypes
+import requests
+import json
+import win32com.client as wincl
+from urllib.request import urlopen
 
 engine = pyttsx3.init('sapi5')
 voices = engine.getProperty('voices')
@@ -54,14 +60,15 @@ def sendEmail(to, content):
 
 if __name__ == "__main__":
         wishMe()
-        #while True:
-        if 1:
+        while True:
+        #if 1:
             query = takeCommand().lower()
             
             if 'wikipedia' in query:
                 speak('Searching Wikipedia...')
                 query= query.replace("wikipedia", "")
-                results = wikipedia.summary(query, sentences=1)
+                #results = wikipedia.summary(query, sentences=5)
+                results = wikipedia.summary(f'{query}', sentences=5 )
                 speak("According to wikipedia...")
                 print(results)
                 speak(results)
@@ -93,7 +100,7 @@ if __name__ == "__main__":
                 try:
                     speak("what should i say?")
                     content = takeCommand()
-                    to = "shuvro171115071@gmail.com"
+                    to = "bedadyutiarun61@gmail.com"
                     sendEmail(to, content)
                     speak("Email has been sent")
                 except Exception as e:
@@ -101,4 +108,57 @@ if __name__ == "__main__":
                     speak("Sorry my friend Shuvro bhai. I am not able to send this mail")
                 
 
+            elif 'send a mail' in query:
+                try:
+                   speak("What should I say?")
+                   content = takeCommand()
+                   speak("whome should i send")
+                   to = input()   
+                   sendEmail(to, content)
+                   speak("Email has been sent !")
+                except Exception as e:
+                 print(e)
+                speak("I am not able to send this email")
+            
+            elif 'how are you' in query:
+                 speak("I am fine, Thank you")
+                 speak("How are you, Sir")
+            
+                
+            elif "where is" in query:
+                query = query.replace("where is", "")
+                location = query
+                speak("User asked to Locate")
+                speak(location)
+                webbrowser.open("https://www.google.nl/maps/place/" + location + "")
+                
+            elif "weather" in query:
+                 
+                # Google Open weather website
+                # to get API of Open weather
+                api_key = "ac004c60fedd947e7a665fb8ea1de302"
+                base_url = "https://api.openweathermap.org/data/2.5/weather?"
+                
+                speak(" City name ")
+                print("City name : ")
+                city_name = takeCommand()
+                complete_url = base_url + "appid=" + api_key + "&q=" + city_name
+                response = requests.get(complete_url)
+                x = response.json()
+                
+                if x["cod"] != "404":
+                    y = x["main"]
+                    current_temperature = y["temp"]
+                    current_pressure = y["pressure"]
+                    current_humidiy = y["humidity"]
+                    z = x["weather"]
+                    weather_description = z[0]["description"]
+                    print(" Temperature (in kelvin unit) = " +str(current_temperature)+"\n atmospheric pressure (in hPa unit) ="+str(current_pressure) +"\n humidity (in percentage) = " +str(current_humidiy) +"\n description = " +str(weather_description))
+                    speak(" Temperature (in kelvin unit) = " +str(current_temperature)+"\n atmospheric pressure (in hPa unit) ="+str(current_pressure) +"\n humidity (in percentage) = " +str(current_humidiy) +"\n description = " +str(weather_description))
+                else:
+                    speak(" City Not Found ")
+            elif 'lock window' in query:
+                    speak("locking the device")
+                    ctypes.windll.user32.LockWorkStation()
+                
 
