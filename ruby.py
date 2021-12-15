@@ -100,7 +100,7 @@ if __name__ == "__main__":
                 try:
                     speak("what should i say?")
                     content = takeCommand()
-                    to = "bedadyutiarun61@gmail.com"
+                    to = "shuvro6589@gmail.com"
                     sendEmail(to, content)
                     speak("Email has been sent")
                 except Exception as e:
@@ -160,5 +160,12 @@ if __name__ == "__main__":
             elif 'lock window' in query:
                     speak("locking the device")
                     ctypes.windll.user32.LockWorkStation()
+                    
+            elif 'project presentation' in query:
+                    speak("opening project presentation")
+                    power = r"C:\\Users\\Hp\\Desktop\\voc (1).pptx"
+                    os.startfile(power)
+                    
+                
                 
 
